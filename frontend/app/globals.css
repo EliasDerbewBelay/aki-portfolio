@@ -126,3 +126,66 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Add to your globals.css */
+
+/* Right to Left Animation */
+@keyframes marquee-right-to-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(
+      calc(-240px * 6 - 1rem * 6)
+    ); /* Smaller card width: 240px, gap: 1rem */
+  }
+}
+
+.marquee-right-to-left {
+  animation: marquee-right-to-left 35s linear infinite;
+  width: fit-content;
+}
+
+/* Left to Right Animation */
+@keyframes marquee-left-to-right {
+  0% {
+    transform: translateX(calc(-240px * 6 - 1rem * 6));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.marquee-left-to-right {
+  animation: marquee-left-to-right 35s linear infinite;
+  width: fit-content;
+}
+
+/* Pause on hover */
+.marquee-right-to-left:hover,
+.marquee-left-to-right:hover {
+  animation-play-state: paused;
+}
+
+/* Pulse animation for filter button */
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite;
+}
+
+/* For smoother animation on all devices */
+.marquee-right-to-left,
+.marquee-left-to-right {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
