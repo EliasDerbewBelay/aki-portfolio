@@ -1,31 +1,33 @@
 """
 Django settings for backend project.
-Updated for Production Deployment.
+Production-ready configuration for Render deployment.
 """
 
 from pathlib import Path
 import os
 import dj_database_url
-
 from dotenv import load_dotenv
-load_dotenv() # This loads the variables from .env into your environment
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Load environment variables from Render / local .env
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- SECURITY ---
-# In production, we get the key from environment variables. 
-# Locally, it falls back to your insecure dev key.
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-es2)nm=%ux5#)jg8wro@5mp0ocakx@_f$c(3^vrcgf9vv1zc4^')
 
-# Only True if the environment variable DEBUG is explicitly set to True
+# --------------------------------------------------
+# SECURITY
+# --------------------------------------------------
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Allow all hosts for deployment (you can restrict this to your specific domain later)
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']  # You can restrict later to your domain
 
 
-# --- APPLICATION DEFINITION ---
+# --------------------------------------------------
+# APPLICATION DEFINITION
+# --------------------------------------------------
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,19 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third-party
     'cloudinary',
     'cloudinary_storage',
-
-    # Third party apps
     'rest_framework',
     'corsheaders',
+
+    # Local
     'portfolio',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', # Must be at the top
+    'corsheaders.middleware.CorsMiddleware',  # must be first
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Add this for static files in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # static serving
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -76,18 +79,22 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# --- DATABASE ---
-# This looks for a DATABASE_URL environment variable (provided by Railway/Render).
-# If it doesn't find one, it uses your local SQLite file.
+# --------------------------------------------------
+# DATABASE (Render provides DATABASE_URL automatically)
+# --------------------------------------------------
+
 DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
 
-# --- PASSWORD VALIDATION ---
+# --------------------------------------------------
+# PASSWORD VALIDATION
+# --------------------------------------------------
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -97,7 +104,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# --- INTERNATIONALIZATION ---
+# --------------------------------------------------
+# INTERNATIONALIZATION
+# --------------------------------------------------
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -105,18 +114,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-# --- STATIC & MEDIA FILES ---
+# --------------------------------------------------
+# STATIC FILES (served by WhiteNoise)
+# --------------------------------------------------
 
-# URL to use when referring to static files
 STATIC_URL = 'static/'
-# The absolute path to the directory where collectstatic will collect static files for deployment.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Media files (User uploads)
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# WhiteNoise storage to compress and cache static files
 STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -124,19 +128,9 @@ STORAGES = {
 }
 
 
-# --- CORS SETTINGS ---
-# Allow both your local Next.js and your future production URL
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
-
-# If you deploy to Vercel, you'll add that URL here later
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://.*\.vercel\.app$",
-]
-
-# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# --------------------------------------------------
+# CLOUDINARY MEDIA STORAGE (THIS replaces MEDIA_ROOT)
+# --------------------------------------------------
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
@@ -145,3 +139,25 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+# --------------------------------------------------
+# CORS (Allow frontend access)
+# --------------------------------------------------
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # local Next.js
+    # Add your production frontend here later:
+    # "https://your-frontend.vercel.app",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
+
+
+# --------------------------------------------------
+# DEFAULT FIELD TYPE
+# --------------------------------------------------
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
