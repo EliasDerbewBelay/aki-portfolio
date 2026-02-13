@@ -6,15 +6,19 @@ import Link from "next/link";
 // We fetch all projects and find the one that matches the slug
 async function getProject(slug: string): Promise<Project | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/`, {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/projects/`,
+      {
+        cache: "no-store",
+      },
+    );
     if (!res.ok) return null;
 
     const projects: Project[] = await res.json();
     // Use .find() and make sure we compare strings correctly
     return projects.find((p) => String(p.slug) === String(slug)) || null;
   } catch (error) {
+    console.error(error);
     return null;
   }
 }
@@ -30,7 +34,7 @@ export default async function ProjectDetail({
 
   if (!project) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="min-h-screen flex flex-col items-center justify-center relative z-10">
         <h1 className="text-2xl font-bold">Project Not Found</h1>
         <Link href="/" className="text-blue-500 mt-4 underline">
           Return Home
@@ -40,11 +44,11 @@ export default async function ProjectDetail({
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen relative z-10 bg-transparent">
       <div className="max-w-4xl mx-auto px-6 py-12">
         <Link
           href="/"
-          className="flex items-center text-gray-500 hover:text-black mb-8 transition-colors"
+          className="flex items-center text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to Gallery
         </Link>
@@ -53,7 +57,7 @@ export default async function ProjectDetail({
           {project.title}
         </h1>
 
-        <div className="flex flex-wrap gap-6 mb-12 text-gray-600 border-b pb-8">
+        <div className="flex flex-wrap gap-6 mb-12 text-gray-600 dark:text-gray-400 border-b pb-8">
           <div className="flex items-center">
             <Tag className="w-4 h-4 mr-2" /> {project.category_display}
           </div>
@@ -82,10 +86,10 @@ export default async function ProjectDetail({
         </div>
 
         <div className="prose prose-xl max-w-none">
-          <h3 className="text-2xl font-semibold mb-4 text-gray-900">
+          <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
             Project Description
           </h3>
-          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
             {project.description}
           </p>
         </div>
