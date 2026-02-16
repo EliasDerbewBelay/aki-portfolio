@@ -17,6 +17,7 @@ import {
   Video,
   Move,
   Loader2,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,9 +47,9 @@ export default function Home() {
         const imagePromises = data.map((project: Project) => {
           return new Promise((resolve, reject) => {
             const img = new Image();
-            img.src = project.imageUrl || project.image; // Adjust based on your project type
+            img.src = project.imageUrl || project.image;
             img.onload = resolve;
-            img.onerror = resolve; // Resolve even on error to not block forever
+            img.onerror = resolve;
           });
         });
 
@@ -74,13 +75,13 @@ export default function Home() {
 
   // Loading skeleton for project cards
   const ProjectCardSkeleton = () => (
-    <div className="relative group cursor-pointer w-[300px] flex-shrink-0 animate-pulse">
+    <div className="relative group cursor-pointer w-[280px] sm:w-[300px] flex-shrink-0 animate-pulse">
       <div className="relative overflow-hidden rounded-2xl bg-gray-200 dark:bg-gray-800 aspect-[4/5]">
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
-      <div className="mt-4 space-y-2">
-        <div className="h-6 bg-gray-200 dark:bg-gray-800 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-800 rounded w-1/2"></div>
+      <div className="mt-4 space-y-2 px-1">
+        <div className="h-5 sm:h-6 bg-gray-200 dark:bg-gray-800 rounded w-3/4"></div>
+        <div className="h-4 sm:h-4 bg-gray-200 dark:bg-gray-800 rounded w-1/2"></div>
       </div>
     </div>
   );
@@ -88,77 +89,80 @@ export default function Home() {
   // Loading state component
   if (isLoading) {
     return (
-      <main className="min-h-screen">
-        {/* Floating Icons Component */}
-        <FloatingIcons />
+      <main className="min-h-screen overflow-x-hidden">
+        {/* Floating Icons Component - Hidden on mobile for performance */}
+        <div className="hidden md:block">
+          <FloatingIcons />
+        </div>
 
-        {/* Hero Section - Same as before but with loading state if needed */}
-        <section className="relative z-10 px-8 py-16 md:py-24">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
+        {/* Hero Section - Mobile Optimized */}
+        <section className="relative z-10 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="space-y-4 sm:space-y-6">
               <Badge
                 variant="outline"
-                className="text-[#0047FF] border-[#0047FF]/30 mb-4"
+                className="text-xs sm:text-sm text-[#0047FF] border-[#0047FF]/30 mb-2 sm:mb-4"
               >
                 Self-Taught Designer & Video Editor
               </Badge>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
                 <span className="block bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent">
                   HOLA!
                 </span>
-                <span className="block">I am Aklilu.</span>
+                <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-2">
+                  I am Aklilu.
+                </span>
               </h1>
-              <p className="text-gray-600 dark:text-gray-300 text-lg max-w-lg">
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-lg">
                 I'm a creative and hands-on Graphic Designer with a passion for
                 bringing ideas to life through visual design. From social media
                 posts to product packaging and websites, I love crafting designs
-                that are both eye-catching and on-brand. I'm easy to work with,
-                detail-oriented, and always up for a creative challenge.
+                that are both eye-catching and on-brand.
               </p>
 
-              {/* Skills Pills */}
-              <div className="flex flex-wrap gap-3 pt-4">
-                <Badge className="bg-[#0047FF]/10 text-[#0047FF] hover:bg-[#0047FF]/20 border-0">
+              {/* Skills Pills - Scrollable on mobile */}
+              <div className="flex flex-wrap gap-2 sm:gap-3 pt-2 sm:pt-4">
+                <Badge className="bg-[#0047FF]/10 text-[#0047FF] hover:bg-[#0047FF]/20 border-0 text-xs sm:text-sm">
                   <PenTool className="w-3 h-3 mr-1" /> Photoshop
                 </Badge>
-                <Badge className="bg-[#00D1FF]/10 text-[#00D1FF] hover:bg-[#00D1FF]/20 border-0">
+                <Badge className="bg-[#00D1FF]/10 text-[#00D1FF] hover:bg-[#00D1FF]/20 border-0 text-xs sm:text-sm">
                   <Layers className="w-3 h-3 mr-1" /> Illustrator
                 </Badge>
-                <Badge className="bg-purple-500/10 text-purple-500 hover:bg-purple-500/20 border-0">
+                <Badge className="bg-purple-500/10 text-purple-500 hover:bg-purple-500/20 border-0 text-xs sm:text-sm">
                   <Type className="w-3 h-3 mr-1" /> InDesign
                 </Badge>
-                <Badge className="bg-orange-500/10 text-orange-500 hover:bg-orange-500/20 border-0">
+                <Badge className="bg-orange-500/10 text-orange-500 hover:bg-orange-500/20 border-0 text-xs sm:text-sm">
                   <Video className="w-3 h-3 mr-1" /> Video Editor
                 </Badge>
               </div>
 
-              <Button className="mt-4 bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity">
+              <Button className="mt-2 sm:mt-4 bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity w-full sm:w-auto">
                 Download Resume <Move className="ml-2 w-4 h-4" />
               </Button>
             </div>
 
-            <div className="relative aspect-square md:aspect-auto md:h-[500px] w-full">
+            <div className="relative aspect-square md:aspect-auto md:h-[500px] w-full max-w-md mx-auto md:max-w-none">
               <HeroImage />
             </div>
           </div>
         </section>
 
-        {/* Selected Works Section with Loading State */}
+        {/* Selected Works Section - Mobile Optimized */}
         <section
           id="selected-works"
-          className="relative z-10 px-8 py-16 md:py-24 overflow-hidden"
+          className="relative z-10 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24 overflow-hidden"
         >
           <div className="max-w-7xl mx-auto">
-            {/* Section Header with Decorative Elements */}
-            <div className="text-center mb-16 relative">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#0047FF]/20 to-[#00D1FF]/20 rounded-full blur-3xl -z-10" />
+            {/* Section Header */}
+            <div className="text-center mb-8 sm:mb-12 md:mb-16 relative">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 bg-gradient-to-r from-[#0047FF]/20 to-[#00D1FF]/20 rounded-full blur-3xl -z-10" />
 
-              <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-4 sm:mb-6 tracking-tighter">
                 SELECTED{" "}
-                <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent relative">
+                <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent relative block sm:inline">
                   WORKS
                   <svg
-                    className="absolute -bottom-2 left-0 w-full"
+                    className="absolute -bottom-2 left-0 w-full hidden sm:block"
                     height="8"
                     viewBox="0 0 200 8"
                     preserveAspectRatio="none"
@@ -184,155 +188,177 @@ export default function Home() {
                   </svg>
                 </span>
               </h2>
-              <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+              <p className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto px-4">
                 A collection of my favorite projects spanning branding, print,
                 motion, and video
               </p>
             </div>
 
-            {/* Filter Buttons - Enhanced Design */}
-            <div className="flex flex-wrap justify-center gap-3 mb-16">
+            {/* Filter Buttons - Scrollable on mobile */}
+            <div className="flex flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 md:mb-16 overflow-x-auto pb-2 sm:pb-0 px-4 -mx-4 sm:mx-0 scrollbar-hide">
               {["all", "branding", "print", "motion", "video"].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => filterProjects(cat)}
                   disabled
                   className={`
-                    relative px-6 py-3 rounded-full text-sm font-medium transition-all duration-300
+                    flex-shrink-0 relative px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300
                     text-gray-400 dark:text-gray-600 cursor-not-allowed
                   `}
                 >
-                  <span className="relative z-10">{cat.toUpperCase()}</span>
+                  <span className="relative z-10 whitespace-nowrap">
+                    {cat.toUpperCase()}
+                  </span>
                 </button>
               ))}
             </div>
 
-            {/* Loading State with Skeleton Cards */}
+            {/* Loading State */}
             <div className="relative w-full overflow-hidden py-4">
-              <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10" />
-              <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10" />
+              {/* Gradient Fade Edges - Adjusted for mobile */}
+              <div className="absolute left-0 top-0 w-16 sm:w-32 h-full bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10" />
+              <div className="absolute right-0 top-0 w-16 sm:w-32 h-full bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10" />
 
-              {/* Loading indicator with text */}
-              <div className="flex justify-center items-center mb-8">
-                <div className="flex items-center gap-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg">
-                  <Loader2 className="w-5 h-5 text-[#0047FF] animate-spin" />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {/* Loading indicator */}
+              <div className="flex justify-center items-center mb-6 sm:mb-8">
+                <div className="flex items-center gap-2 sm:gap-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg">
+                  <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#0047FF] animate-spin" />
+                  <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
                     Loading amazing projects...
                   </span>
                 </div>
               </div>
 
-              {/* First Scrolling Row - Right to Left with Skeletons */}
-              <div className="flex gap-4 mb-4 marquee-right-to-left">
-                {[...Array(8)].map((_, index) => (
-                  <ProjectCardSkeleton key={`skeleton-1-${index}`} />
-                ))}
-              </div>
-
-              {/* Second Scrolling Row - Left to Right with Skeletons */}
-              <div className="flex gap-4 marquee-left-to-right">
-                {[...Array(8)].map((_, index) => (
-                  <ProjectCardSkeleton key={`skeleton-2-${index}`} />
+              {/* Skeleton Cards - Single row on mobile */}
+              <div className="flex gap-3 sm:gap-4 animate-pulse">
+                {[...Array(4)].map((_, index) => (
+                  <ProjectCardSkeleton key={`skeleton-${index}`} />
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* About Me Section */}
+        {/* About Me Section - Mobile Optimized */}
         <section
           id="about-me"
-          className="relative z-10 px-8 py-16 md:py-24 bg-gradient-to-b from-transparent via-[#0047FF]/5 to-transparent"
+          className="relative z-10 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24 bg-gradient-to-b from-transparent via-[#0047FF]/5 to-transparent"
         >
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-              {/* Left Column - About Text */}
-              <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
+              {/* Left Column */}
+              <div className="space-y-4 sm:space-y-6">
                 <Badge
                   variant="outline"
-                  className="text-[#0047FF] border-[#0047FF]/30"
+                  className="text-xs sm:text-sm text-[#0047FF] border-[#0047FF]/30"
                 >
                   ABOUT ME
                 </Badge>
-                <h2 className="text-4xl md:text-5xl font-black leading-tight">
-                  Self-Taught <br />
-                  <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-tight">
+                  Self-Taught{" "}
+                  <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent block sm:inline">
                     Creative Mind
                   </span>
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300 text-lg">
+                <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300">
                   I'm a self-taught graphic designer and video editor with a
                   passion for visual storytelling. My journey started with
                   curiosity and grew into a profession through countless hours
                   of practice and experimentation.
                 </p>
 
-                {/* Skills with Icons */}
-                <div className="grid grid-cols-2 gap-6 pt-6">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-[#0047FF]/10 rounded-lg">
-                        <PenTool className="w-5 h-5 text-[#0047FF]" />
+                {/* Skills Grid - Responsive */}
+                <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-4 sm:pt-6">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="p-1.5 sm:p-2 bg-[#0047FF]/10 rounded-lg">
+                        <PenTool className="w-4 h-4 sm:w-5 sm:h-5 text-[#0047FF]" />
                       </div>
                       <div>
-                        <h4 className="font-bold">Photoshop</h4>
-                        <p className="text-sm text-gray-500">Raster Editing</p>
+                        <h4 className="text-sm sm:text-base font-bold">
+                          Photoshop
+                        </h4>
+                        <p className="text-xs sm:text-sm text-gray-500">
+                          Raster Editing
+                        </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-[#00D1FF]/10 rounded-lg">
-                        <Layers className="w-5 h-5 text-[#00D1FF]" />
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="p-1.5 sm:p-2 bg-[#00D1FF]/10 rounded-lg">
+                        <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-[#00D1FF]" />
                       </div>
                       <div>
-                        <h4 className="font-bold">Illustrator</h4>
-                        <p className="text-sm text-gray-500">Vector Design</p>
+                        <h4 className="text-sm sm:text-base font-bold">
+                          Illustrator
+                        </h4>
+                        <p className="text-xs sm:text-sm text-gray-500">
+                          Vector Design
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-purple-500/10 rounded-lg">
-                        <Type className="w-5 h-5 text-purple-500" />
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="p-1.5 sm:p-2 bg-purple-500/10 rounded-lg">
+                        <Type className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
                       </div>
                       <div>
-                        <h4 className="font-bold">InDesign</h4>
-                        <p className="text-sm text-gray-500">Layout Design</p>
+                        <h4 className="text-sm sm:text-base font-bold">
+                          InDesign
+                        </h4>
+                        <p className="text-xs sm:text-sm text-gray-500">
+                          Layout Design
+                        </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-orange-500/10 rounded-lg">
-                        <Video className="w-5 h-5 text-orange-500" />
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="p-1.5 sm:p-2 bg-orange-500/10 rounded-lg">
+                        <Video className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
                       </div>
                       <div>
-                        <h4 className="font-bold">Video Editing</h4>
-                        <p className="text-sm text-gray-500">Premiere Pro</p>
+                        <h4 className="text-sm sm:text-base font-bold">
+                          Video Editing
+                        </h4>
+                        <p className="text-xs sm:text-sm text-gray-500">
+                          Premiere Pro
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Right Column - Stats/Experience */}
-              <div className="grid grid-cols-2 gap-6">
-                <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl">
-                  <CardContent className="p-6 text-center">
-                    <Sparkles className="w-8 h-8 mx-auto mb-3 text-[#0047FF]" />
-                    <h3 className="text-3xl font-black">1+</h3>
-                    <p className="text-sm text-gray-500">Years Experience</p>
+              {/* Stats Cards - Responsive Grid */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+                <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl">
+                  <CardContent className="p-4 sm:p-6 text-center">
+                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-[#0047FF]" />
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-black">
+                      1+
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-500">
+                      Years Exp.
+                    </p>
                   </CardContent>
                 </Card>
-                <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl">
-                  <CardContent className="p-6 text-center">
-                    <Palette className="w-8 h-8 mx-auto mb-3 text-[#00D1FF]" />
-                    <h3 className="text-3xl font-black">50+</h3>
-                    <p className="text-sm text-gray-500">Projects Done</p>
+                <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl">
+                  <CardContent className="p-4 sm:p-6 text-center">
+                    <Palette className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-[#00D1FF]" />
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-black">
+                      50+
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-500">Projects</p>
                   </CardContent>
                 </Card>
-                <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl col-span-2">
-                  <CardContent className="p-6 text-center">
-                    <Camera className="w-8 h-8 mx-auto mb-3 text-purple-500" />
-                    <h3 className="text-3xl font-black">100%</h3>
-                    <p className="text-sm text-gray-500">Client Satisfaction</p>
+                <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl col-span-2">
+                  <CardContent className="p-4 sm:p-6 text-center">
+                    <Camera className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-purple-500" />
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-black">
+                      100%
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-500">
+                      Satisfaction
+                    </p>
                   </CardContent>
                 </Card>
               </div>
@@ -340,87 +366,106 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Hire Me Section with Form */}
-        <section id="hire-me" className="relative z-10 px-8 py-16 md:py-24">
+        {/* Hire Me Section - Mobile Optimized */}
+        <section
+          id="hire-me"
+          className="relative z-10 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24"
+        >
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8 sm:mb-10 md:mb-12">
               <Badge
                 variant="outline"
-                className="text-[#0047FF] border-[#0047FF]/30 mb-4"
+                className="text-xs sm:text-sm text-[#0047FF] border-[#0047FF]/30 mb-3 sm:mb-4"
               >
                 LET'S WORK TOGETHER
               </Badge>
-              <h2 className="text-4xl md:text-5xl font-black mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-2 sm:mb-4">
                 Hire{" "}
                 <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent">
                   Me
                 </span>
               </h2>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 px-4">
                 Have a project in mind? Let's bring your ideas to life
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Contact Info Cards */}
-              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#0047FF]/10 flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-[#0047FF]" />
+            {/* Contact Cards - Stack on mobile, grid on tablet+ */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl hover:shadow-2xl transition-shadow">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 rounded-full bg-[#0047FF]/10 flex items-center justify-center">
+                    <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-[#0047FF]" />
                   </div>
-                  <h3 className="font-bold mb-2">Email</h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="text-sm sm:text-base font-bold mb-1 sm:mb-2">
+                    Email
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-500 break-all px-2">
                     Jornalistaklilu@gmail.com
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#00D1FF]/10 flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-[#00D1FF]" />
+              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl hover:shadow-2xl transition-shadow">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 rounded-full bg-[#00D1FF]/10 flex items-center justify-center">
+                    <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-[#00D1FF]" />
                   </div>
-                  <h3 className="font-bold mb-2">Phone</h3>
-                  <p className="text-sm text-gray-500">+251 99 383 4681</p>
+                  <h3 className="text-sm sm:text-base font-bold mb-1 sm:mb-2">
+                    Phone
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    +251 99 383 4681
+                  </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-500/10 flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-purple-500" />
+              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl hover:shadow-2xl transition-shadow sm:col-span-2 md:col-span-1">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 rounded-full bg-purple-500/10 flex items-center justify-center">
+                    <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
                   </div>
-                  <h3 className="font-bold mb-2">Location</h3>
-                  <p className="text-sm text-gray-500">Addis Ababa, Ethiopia</p>
+                  <h3 className="text-sm sm:text-base font-bold mb-1 sm:mb-2">
+                    Location
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    Addis Ababa, Ethiopia
+                  </p>
                 </CardContent>
               </Card>
             </div>
 
             {/* Contact Form */}
-            <Card className="mt-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl">
-              <CardContent className="p-8">
-                <form className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Name</label>
+            <Card className="mt-6 sm:mt-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl">
+              <CardContent className="p-4 sm:p-6 md:p-8">
+                <form className="space-y-4 sm:space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="space-y-1 sm:space-y-2">
+                      <label className="text-xs sm:text-sm font-medium">
+                        Name
+                      </label>
                       <Input
                         placeholder="Your name"
-                        className="bg-white dark:bg-gray-800"
+                        className="bg-white dark:bg-gray-800 text-sm"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Email</label>
+                    <div className="space-y-1 sm:space-y-2">
+                      <label className="text-xs sm:text-sm font-medium">
+                        Email
+                      </label>
                       <Input
                         type="email"
                         placeholder="your@email.com"
-                        className="bg-white dark:bg-gray-800"
+                        className="bg-white dark:bg-gray-800 text-sm"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Project Type</label>
-                    <select className="w-full px-3 py-2 bg-white dark:bg-gray-800 border rounded-md">
+                  <div className="space-y-1 sm:space-y-2">
+                    <label className="text-xs sm:text-sm font-medium">
+                      Project Type
+                    </label>
+                    <select className="w-full px-3 py-2 bg-white dark:bg-gray-800 border rounded-md text-sm">
                       <option>Branding</option>
                       <option>Print Design</option>
                       <option>Motion Graphics</option>
@@ -429,16 +474,18 @@ export default function Home() {
                     </select>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Message</label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <label className="text-xs sm:text-sm font-medium">
+                      Message
+                    </label>
                     <Textarea
                       placeholder="Tell me about your project..."
-                      className="min-h-[120px] bg-white dark:bg-gray-800"
+                      className="min-h-[100px] sm:min-h-[120px] bg-white dark:bg-gray-800 text-sm"
                     />
                   </div>
 
-                  <Button className="w-full bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity">
-                    Send Message <Send className="ml-2 w-4 h-4" />
+                  <Button className="w-full bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity text-sm sm:text-base py-2 sm:py-3">
+                    Send Message <Send className="ml-2 w-3 h-3 sm:w-4 sm:h-4" />
                   </Button>
                 </form>
               </CardContent>
@@ -451,27 +498,31 @@ export default function Home() {
 
   // Regular render when loading is complete
   return (
-    <main className="min-h-screen">
-      {/* Floating Icons Component */}
-      <FloatingIcons />
+    <main className="min-h-screen overflow-x-hidden">
+      {/* Floating Icons Component - Hidden on mobile */}
+      <div className="hidden md:block">
+        <FloatingIcons />
+      </div>
 
       {/* Hero Section */}
-      <section className="relative z-10 px-8 py-16 md:py-24">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+      <section className="relative z-10 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center">
+          <div className="space-y-4 sm:space-y-6">
             <Badge
               variant="outline"
-              className="text-[#0047FF] border-[#0047FF]/30 mb-4"
+              className="text-xs sm:text-sm text-[#0047FF] border-[#0047FF]/30 mb-2 sm:mb-4"
             >
               Self-Taught Designer & Video Editor
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
               <span className="block bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent">
                 HOLA!
               </span>
-              <span className="block">I am Aklilu.</span>
+              <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-2">
+                I am Aklilu.
+              </span>
             </h1>
-            <p className="text-gray-600 dark:text-gray-300 text-lg max-w-lg">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-lg">
               I'm a creative and hands-on Graphic Designer with a passion for
               bringing ideas to life through visual design. From social media
               posts to product packaging and websites, I love crafting designs
@@ -480,27 +531,27 @@ export default function Home() {
             </p>
 
             {/* Skills Pills */}
-            <div className="flex flex-wrap gap-3 pt-4">
-              <Badge className="bg-[#0047FF]/10 text-[#0047FF] hover:bg-[#0047FF]/20 border-0">
+            <div className="flex flex-wrap gap-2 sm:gap-3 pt-2 sm:pt-4">
+              <Badge className="bg-[#0047FF]/10 text-[#0047FF] hover:bg-[#0047FF]/20 border-0 text-xs sm:text-sm">
                 <PenTool className="w-3 h-3 mr-1" /> Photoshop
               </Badge>
-              <Badge className="bg-[#00D1FF]/10 text-[#00D1FF] hover:bg-[#00D1FF]/20 border-0">
+              <Badge className="bg-[#00D1FF]/10 text-[#00D1FF] hover:bg-[#00D1FF]/20 border-0 text-xs sm:text-sm">
                 <Layers className="w-3 h-3 mr-1" /> Illustrator
               </Badge>
-              <Badge className="bg-purple-500/10 text-purple-500 hover:bg-purple-500/20 border-0">
+              <Badge className="bg-purple-500/10 text-purple-500 hover:bg-purple-500/20 border-0 text-xs sm:text-sm">
                 <Type className="w-3 h-3 mr-1" /> InDesign
               </Badge>
-              <Badge className="bg-orange-500/10 text-orange-500 hover:bg-orange-500/20 border-0">
+              <Badge className="bg-orange-500/10 text-orange-500 hover:bg-orange-500/20 border-0 text-xs sm:text-sm">
                 <Video className="w-3 h-3 mr-1" /> Video Editor
               </Badge>
             </div>
 
-            <Button className="mt-4 bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity">
+            <Button className="mt-2 sm:mt-4 bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity w-full sm:w-auto">
               Download Resume <Move className="ml-2 w-4 h-4" />
             </Button>
           </div>
 
-          <div className="relative aspect-square md:aspect-auto md:h-[500px] w-full">
+          <div className="relative aspect-square md:aspect-auto md:h-[500px] w-full max-w-md mx-auto md:max-w-none">
             <HeroImage />
           </div>
         </div>
@@ -509,20 +560,19 @@ export default function Home() {
       {/* Selected Works Section */}
       <section
         id="selected-works"
-        className="relative z-10 px-8 py-16 md:py-24 overflow-hidden"
+        className="relative z-10 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24 overflow-hidden"
       >
         <div className="max-w-7xl mx-auto">
-          {/* Section Header with Decorative Elements */}
-          <div className="text-center mb-16 relative">
-            {/* Background blur element */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-[#0047FF]/20 to-[#00D1FF]/20 rounded-full blur-3xl -z-10" />
+          {/* Section Header */}
+          <div className="text-center mb-8 sm:mb-12 md:mb-16 relative">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 bg-gradient-to-r from-[#0047FF]/20 to-[#00D1FF]/20 rounded-full blur-3xl -z-10" />
 
-            <h2 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-4 sm:mb-6 tracking-tighter">
               SELECTED{" "}
-              <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent relative">
+              <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent relative block sm:inline">
                 WORKS
                 <svg
-                  className="absolute -bottom-2 left-0 w-full"
+                  className="absolute -bottom-2 left-0 w-full hidden sm:block"
                   height="8"
                   viewBox="0 0 200 8"
                   preserveAspectRatio="none"
@@ -548,20 +598,20 @@ export default function Home() {
                 </svg>
               </span>
             </h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg">
+            <p className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto px-4">
               A collection of my favorite projects spanning branding, print,
               motion, and video
             </p>
           </div>
 
-          {/* Filter Buttons - Enhanced Design */}
-          <div className="flex flex-wrap justify-center gap-3 mb-16">
+          {/* Filter Buttons - Scrollable on mobile */}
+          <div className="flex flex-nowrap sm:flex-wrap justify-start sm:justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 md:mb-16 overflow-x-auto pb-2 sm:pb-0 px-4 -mx-4 sm:mx-0 scrollbar-hide">
             {["all", "branding", "print", "motion", "video"].map((cat) => (
               <button
                 key={cat}
                 onClick={() => filterProjects(cat)}
                 className={`
-                  relative px-6 py-3 rounded-full text-sm font-medium transition-all duration-300
+                  flex-shrink-0 relative px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300
                   ${
                     activeFilter === cat
                       ? "text-white shadow-lg shadow-[#0047FF]/25"
@@ -573,7 +623,7 @@ export default function Home() {
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#0047FF] to-[#00D1FF] animate-pulse-slow" />
                 )}
                 <span
-                  className={`relative z-10 ${activeFilter === cat ? "text-white" : ""}`}
+                  className={`relative z-10 whitespace-nowrap ${activeFilter === cat ? "text-white" : ""}`}
                 >
                   {cat.toUpperCase()}
                 </span>
@@ -581,41 +631,43 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Infinite Looping Carousel */}
+          {/* Carousel - Responsive */}
           <div className="relative w-full overflow-hidden py-4">
             {/* Gradient Fade Edges */}
-            <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10" />
-            <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10" />
+            <div className="absolute left-0 top-0 w-16 sm:w-32 h-full bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10" />
+            <div className="absolute right-0 top-0 w-16 sm:w-32 h-full bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10" />
 
-            {/* First Scrolling Row - Right to Left */}
-            <div className="flex gap-4 mb-4 marquee-right-to-left">
-              {/* Quadruple the projects for smoother loop */}
+            {/* First Scrolling Row */}
+            <div className="flex gap-3 sm:gap-4 mb-3 sm:mb-4 marquee-right-to-left">
               {[
                 ...filteredProjects,
                 ...filteredProjects,
                 ...filteredProjects,
                 ...filteredProjects,
               ].map((project, index) => (
-                <ProjectCard
+                <div
                   key={`${project.id}-${index}-1`}
-                  project={project}
-                />
+                  className="w-[260px] sm:w-[280px] md:w-[300px] flex-shrink-0"
+                >
+                  <ProjectCard project={project} />
+                </div>
               ))}
             </div>
 
-            {/* Second Scrolling Row - Left to Right (opposite direction for visual interest) */}
-            <div className="flex gap-4 marquee-left-to-right">
-              {/* Quadruple the projects for smoother loop */}
+            {/* Second Scrolling Row */}
+            <div className="flex gap-3 sm:gap-4 marquee-left-to-right">
               {[
                 ...filteredProjects,
                 ...filteredProjects,
                 ...filteredProjects,
                 ...filteredProjects,
               ].map((project, index) => (
-                <ProjectCard
+                <div
                   key={`${project.id}-${index}-2`}
-                  project={project}
-                />
+                  className="w-[260px] sm:w-[280px] md:w-[300px] flex-shrink-0"
+                >
+                  <ProjectCard project={project} />
+                </div>
               ))}
             </div>
           </div>
@@ -625,97 +677,121 @@ export default function Home() {
       {/* About Me Section */}
       <section
         id="about-me"
-        className="relative z-10 px-8 py-16 md:py-24 bg-gradient-to-b from-transparent via-[#0047FF]/5 to-transparent"
+        className="relative z-10 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24 bg-gradient-to-b from-transparent via-[#0047FF]/5 to-transparent"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            {/* Left Column - About Text */}
-            <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
+            {/* Left Column */}
+            <div className="space-y-4 sm:space-y-6">
               <Badge
                 variant="outline"
-                className="text-[#0047FF] border-[#0047FF]/30"
+                className="text-xs sm:text-sm text-[#0047FF] border-[#0047FF]/30"
               >
                 ABOUT ME
               </Badge>
-              <h2 className="text-4xl md:text-5xl font-black leading-tight">
-                Self-Taught <br />
-                <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-tight">
+                Self-Taught{" "}
+                <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent block sm:inline">
                   Creative Mind
                 </span>
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 text-lg">
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300">
                 I'm a self-taught graphic designer and video editor with a
                 passion for visual storytelling. My journey started with
                 curiosity and grew into a profession through countless hours of
                 practice and experimentation.
               </p>
 
-              {/* Skills with Icons */}
-              <div className="grid grid-cols-2 gap-6 pt-6">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-[#0047FF]/10 rounded-lg">
-                      <PenTool className="w-5 h-5 text-[#0047FF]" />
+              {/* Skills Grid */}
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-4 sm:pt-6">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="p-1.5 sm:p-2 bg-[#0047FF]/10 rounded-lg">
+                      <PenTool className="w-4 h-4 sm:w-5 sm:h-5 text-[#0047FF]" />
                     </div>
                     <div>
-                      <h4 className="font-bold">Photoshop</h4>
-                      <p className="text-sm text-gray-500">Raster Editing</p>
+                      <h4 className="text-sm sm:text-base font-bold">
+                        Photoshop
+                      </h4>
+                      <p className="text-xs sm:text-sm text-gray-500">
+                        Raster Editing
+                      </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-[#00D1FF]/10 rounded-lg">
-                      <Layers className="w-5 h-5 text-[#00D1FF]" />
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="p-1.5 sm:p-2 bg-[#00D1FF]/10 rounded-lg">
+                      <Layers className="w-4 h-4 sm:w-5 sm:h-5 text-[#00D1FF]" />
                     </div>
                     <div>
-                      <h4 className="font-bold">Illustrator</h4>
-                      <p className="text-sm text-gray-500">Vector Design</p>
+                      <h4 className="text-sm sm:text-base font-bold">
+                        Illustrator
+                      </h4>
+                      <p className="text-xs sm:text-sm text-gray-500">
+                        Vector Design
+                      </p>
                     </div>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-purple-500/10 rounded-lg">
-                      <Type className="w-5 h-5 text-purple-500" />
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="p-1.5 sm:p-2 bg-purple-500/10 rounded-lg">
+                      <Type className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
                     </div>
                     <div>
-                      <h4 className="font-bold">InDesign</h4>
-                      <p className="text-sm text-gray-500">Layout Design</p>
+                      <h4 className="text-sm sm:text-base font-bold">
+                        InDesign
+                      </h4>
+                      <p className="text-xs sm:text-sm text-gray-500">
+                        Layout Design
+                      </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-orange-500/10 rounded-lg">
-                      <Video className="w-5 h-5 text-orange-500" />
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="p-1.5 sm:p-2 bg-orange-500/10 rounded-lg">
+                      <Video className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />
                     </div>
                     <div>
-                      <h4 className="font-bold">Video Editing</h4>
-                      <p className="text-sm text-gray-500">Premiere Pro</p>
+                      <h4 className="text-sm sm:text-base font-bold">
+                        Video Editing
+                      </h4>
+                      <p className="text-xs sm:text-sm text-gray-500">
+                        Premiere Pro
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Column - Stats/Experience */}
-            <div className="grid grid-cols-2 gap-6">
-              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl">
-                <CardContent className="p-6 text-center">
-                  <Sparkles className="w-8 h-8 mx-auto mb-3 text-[#0047FF]" />
-                  <h3 className="text-3xl font-black">1+</h3>
-                  <p className="text-sm text-gray-500">Years Experience</p>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-[#0047FF]" />
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black">
+                    1+
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-500">Years Exp.</p>
                 </CardContent>
               </Card>
-              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl">
-                <CardContent className="p-6 text-center">
-                  <Palette className="w-8 h-8 mx-auto mb-3 text-[#00D1FF]" />
-                  <h3 className="text-3xl font-black">50+</h3>
-                  <p className="text-sm text-gray-500">Projects Done</p>
+              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <Palette className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-[#00D1FF]" />
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black">
+                    50+
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-500">Projects</p>
                 </CardContent>
               </Card>
-              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl col-span-2">
-                <CardContent className="p-6 text-center">
-                  <Camera className="w-8 h-8 mx-auto mb-3 text-purple-500" />
-                  <h3 className="text-3xl font-black">100%</h3>
-                  <p className="text-sm text-gray-500">Client Satisfaction</p>
+              <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl col-span-2">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <Camera className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-purple-500" />
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black">
+                    100%
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    Satisfaction
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -723,87 +799,106 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hire Me Section with Form */}
-      <section id="hire-me" className="relative z-10 px-8 py-16 md:py-24">
+      {/* Hire Me Section */}
+      <section
+        id="hire-me"
+        className="relative z-10 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-24"
+      >
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
             <Badge
               variant="outline"
-              className="text-[#0047FF] border-[#0047FF]/30 mb-4"
+              className="text-xs sm:text-sm text-[#0047FF] border-[#0047FF]/30 mb-3 sm:mb-4"
             >
               LET'S WORK TOGETHER
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-black mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-2 sm:mb-4">
               Hire{" "}
               <span className="bg-gradient-to-r from-[#0047FF] to-[#00D1FF] bg-clip-text text-transparent">
                 Me
               </span>
             </h2>
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 px-4">
               Have a project in mind? Let's bring your ideas to life
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Contact Info Cards */}
-            <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-shadow">
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#0047FF]/10 flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-[#0047FF]" />
+          {/* Contact Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+            <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl hover:shadow-2xl transition-shadow">
+              <CardContent className="p-4 sm:p-6 text-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 rounded-full bg-[#0047FF]/10 flex items-center justify-center">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-[#0047FF]" />
                 </div>
-                <h3 className="font-bold mb-2">Email</h3>
-                <p className="text-sm text-gray-500">
+                <h3 className="text-sm sm:text-base font-bold mb-1 sm:mb-2">
+                  Email
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-500 break-all px-2">
                   Jornalistaklilu@gmail.com
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-shadow">
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#00D1FF]/10 flex items-center justify-center">
-                  <Phone className="w-6 h-6 text-[#00D1FF]" />
+            <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl hover:shadow-2xl transition-shadow">
+              <CardContent className="p-4 sm:p-6 text-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 rounded-full bg-[#00D1FF]/10 flex items-center justify-center">
+                  <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-[#00D1FF]" />
                 </div>
-                <h3 className="font-bold mb-2">Phone</h3>
-                <p className="text-sm text-gray-500">+251 99 383 4681</p>
+                <h3 className="text-sm sm:text-base font-bold mb-1 sm:mb-2">
+                  Phone
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  +251 99 383 4681
+                </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-shadow">
-              <CardContent className="p-6 text-center">
-                <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-500/10 flex items-center justify-center">
-                  <MapPin className="w-6 h-6 text-purple-500" />
+            <Card className="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl hover:shadow-2xl transition-shadow sm:col-span-2 md:col-span-1">
+              <CardContent className="p-4 sm:p-6 text-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 rounded-full bg-purple-500/10 flex items-center justify-center">
+                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
                 </div>
-                <h3 className="font-bold mb-2">Location</h3>
-                <p className="text-sm text-gray-500">Addis Ababa, Ethiopia</p>
+                <h3 className="text-sm sm:text-base font-bold mb-1 sm:mb-2">
+                  Location
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  Addis Ababa, Ethiopia
+                </p>
               </CardContent>
             </Card>
           </div>
 
           {/* Contact Form */}
-          <Card className="mt-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-xl">
-            <CardContent className="p-8">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Name</label>
+          <Card className="mt-6 sm:mt-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-0 shadow-lg sm:shadow-xl">
+            <CardContent className="p-4 sm:p-6 md:p-8">
+              <form className="space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="space-y-1 sm:space-y-2">
+                    <label className="text-xs sm:text-sm font-medium">
+                      Name
+                    </label>
                     <Input
                       placeholder="Your name"
-                      className="bg-white dark:bg-gray-800"
+                      className="bg-white dark:bg-gray-800 text-sm"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Email</label>
+                  <div className="space-y-1 sm:space-y-2">
+                    <label className="text-xs sm:text-sm font-medium">
+                      Email
+                    </label>
                     <Input
                       type="email"
                       placeholder="your@email.com"
-                      className="bg-white dark:bg-gray-800"
+                      className="bg-white dark:bg-gray-800 text-sm"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Project Type</label>
-                  <select className="w-full px-3 py-2 bg-white dark:bg-gray-800 border rounded-md">
+                <div className="space-y-1 sm:space-y-2">
+                  <label className="text-xs sm:text-sm font-medium">
+                    Project Type
+                  </label>
+                  <select className="w-full px-3 py-2 bg-white dark:bg-gray-800 border rounded-md text-sm">
                     <option>Branding</option>
                     <option>Print Design</option>
                     <option>Motion Graphics</option>
@@ -812,16 +907,18 @@ export default function Home() {
                   </select>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Message</label>
+                <div className="space-y-1 sm:space-y-2">
+                  <label className="text-xs sm:text-sm font-medium">
+                    Message
+                  </label>
                   <Textarea
                     placeholder="Tell me about your project..."
-                    className="min-h-[120px] bg-white dark:bg-gray-800"
+                    className="min-h-[100px] sm:min-h-[120px] bg-white dark:bg-gray-800 text-sm"
                   />
                 </div>
 
-                <Button className="w-full bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity">
-                  Send Message <Send className="ml-2 w-4 h-4" />
+                <Button className="w-full bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity text-sm sm:text-base py-2 sm:py-3">
+                  Send Message <Send className="ml-2 w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </form>
             </CardContent>
