@@ -73,6 +73,20 @@ export default function Home() {
     }
   };
 
+  // Handle resume download
+  const handleDownloadResume = () => {
+    // Path to your resume file in the public folder
+    const resumePath = "/resume/aklilu_resume.pdf";
+
+    // Create an anchor element and trigger download
+    const link = document.createElement("a");
+    link.href = resumePath;
+    link.download = "Aklilu_Resume.pdf"; // The filename that will be downloaded
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // Loading skeleton for project cards
   const ProjectCardSkeleton = () => (
     <div className="relative group cursor-pointer w-[280px] sm:w-[300px] flex-shrink-0 animate-pulse">
@@ -136,7 +150,10 @@ export default function Home() {
                 </Badge>
               </div>
 
-              <Button className="mt-2 sm:mt-4 bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity w-full sm:w-auto">
+              <Button
+                onClick={handleDownloadResume}
+                className="mt-2 sm:mt-4 bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity w-full sm:w-auto"
+              >
                 Download Resume <Move className="ml-2 w-4 h-4" />
               </Button>
             </div>
@@ -546,7 +563,10 @@ export default function Home() {
               </Badge>
             </div>
 
-            <Button className="mt-2 sm:mt-4 bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity w-full sm:w-auto">
+            <Button
+              onClick={handleDownloadResume}
+              className="mt-2 sm:mt-4 bg-gradient-to-r from-[#0047FF] to-[#00D1FF] text-white hover:opacity-90 transition-opacity w-full sm:w-auto"
+            >
               Download Resume <Move className="ml-2 w-4 h-4" />
             </Button>
           </div>
